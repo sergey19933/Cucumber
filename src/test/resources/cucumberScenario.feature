@@ -1,8 +1,7 @@
 #language: ru
 
-@regress
+@all
 Функционал: Сбербанк
-
 
   @firstTest
   Сценарий:  Проверка

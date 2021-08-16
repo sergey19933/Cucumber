@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
         plugin = {"io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"},
         glue = {"org.serg.framework.steps"},
         features = {"src/test/resources/"},
-        tags = "@regress"
+        tags = "@firstTest"
 )
 
 public class CucumberRunner {
