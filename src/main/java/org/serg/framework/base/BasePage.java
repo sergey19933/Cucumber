@@ -38,7 +38,7 @@ public class BasePage {
      *
      * @see Actions
      */
-    protected Actions actions = new Actions(driverManager.getDriver());
+    protected Actions actions = new Actions(DriverManager.getDriver());
 
 
     /**
@@ -46,7 +46,7 @@ public class BasePage {
      *
      * @see JavascriptExecutor
      */
-    protected JavascriptExecutor js = (JavascriptExecutor) driverManager.getDriver();
+    protected JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
 
 
     /**
@@ -55,7 +55,7 @@ public class BasePage {
      *
      * @see WebDriverWait
      */
-    protected WebDriverWait wait = new WebDriverWait(driverManager.getDriver(), 10, 1000);
+    protected WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 10, 1000);
 
 
     /**
@@ -76,7 +76,7 @@ public class BasePage {
      * @see PageFactory#initElements(WebDriver, Object)
      */
     public BasePage() {
-        PageFactory.initElements(driverManager.getDriver(), this);
+        PageFactory.initElements(DriverManager.getDriver(), this);
     }
 
 

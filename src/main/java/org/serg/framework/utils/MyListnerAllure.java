@@ -13,7 +13,7 @@ public class MyListnerAllure extends AllureCucumber5Jvm {
         EventHandler<TestStepFinished> eventHandler = testStepFinished -> {
             if (testStepFinished.getResult().getStatus().equals(Status.FAILED)) {
                 Allure.getLifecycle().addAttachment("Scrin", "image/png", "png"
-                        , ((TakesScreenshot) DriverManager.getDriverManager().getDriver())
+                        , ((TakesScreenshot) DriverManager.getDriver())
                                 .getScreenshotAs(OutputType.BYTES));
             }
         };

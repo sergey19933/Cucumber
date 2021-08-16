@@ -2,45 +2,39 @@ package org.serg.framework.managers;
 
 import java.util.concurrent.TimeUnit;
 
-
+import static org.serg.framework.managers.DriverManager.getDriver;
+import static org.serg.framework.managers.DriverManager.quitDriver;
+import static org.serg.framework.managers.PageManager.disableManagerPages;
 import static org.serg.framework.utils.PropConst.*;
 
 public class InitManager {
 
+
     /**
-     * Менеджер properties
-     *
+     * Менеджер пропертей
      * @see TestPropManager#getTestPropManager()
      */
-    private static final TestPropManager props = TestPropManager.getTestPropManager();
+    public static TestPropManager props = TestPropManager.getTestPropManager();
 
     /**
-     * Менеджер WebDriver
-     *
-     * @see DriverManager#getDriverManager()
-     */
-    private static final DriverManager driverManager = DriverManager.getDriverManager();
-
-    /**
-     * Инициализация framework и запуск браузера со страницей приложения
-     *
-     * @see DriverManager
+     * Инициализация фреймворка и запуск браузера со страницей приложения
+     * @see DriverManager#getDriver()
      * @see TestPropManager#getProperty(String)
      * @see org.serg.framework.utils
      */
     public static void initFramework() {
-        driverManager.getDriver().manage().window().maximize();
-        driverManager.getDriver().manage().timeouts().implicitlyWait(Integer.parseInt(props.getProperty(IMPLICITLY_WAIT)), TimeUnit.SECONDS);
-        driverManager.getDriver().manage().timeouts().pageLoadTimeout(Integer.parseInt(props.getProperty(PAGE_LOAD_TIMEOUT)), TimeUnit.SECONDS);
-        driverManager.getDriver().get(TestPropManager.getTestPropManager().getProperty(BASE_URL));
+        getDriver().manage().window().maximize();
+        getDriver().manage().timeouts().implicitlyWait(Integer.parseInt(props.getProperty(IMPLICITLY_WAIT)), TimeUnit.SECONDS);
+        getDriver().manage().timeouts().pageLoadTimeout(Integer.parseInt(props.getProperty(PAGE_LOAD_TIMEOUT)), TimeUnit.SECONDS);
+        getDriver().get(props.getProperty(APP_URL));
     }
 
     /**
-     * Завершения работы framework - гасит драйвер и закрывает сессию с браузером
-     *
+     * Завершения работы фреймворка - гасит драйвер и закрывает сессию с браузером
      * @see DriverManager#quitDriver()
      */
     public static void quitFramework() {
-        driverManager.quitDriver();
+        quitDriver();
+        disableManagerPages();
     }
 }

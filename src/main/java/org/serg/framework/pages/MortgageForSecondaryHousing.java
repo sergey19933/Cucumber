@@ -1,8 +1,6 @@
 package org.serg.framework.pages;
 
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.serg.framework.base.BasePage;
@@ -51,8 +49,8 @@ public class MortgageForSecondaryHousing extends BasePage {
 
 
     public MortgageForSecondaryHousing framePage() {
-        DriverManager.getDriverManager().getDriver().manage().timeouts().implicitlyWait(1500, TimeUnit.MILLISECONDS);
-        DriverManager.getDriverManager().getDriver().switchTo().frame("iFrameResizer0");
+        DriverManager.getDriver().manage().timeouts().implicitlyWait(1500, TimeUnit.MILLISECONDS);
+        DriverManager.getDriver().switchTo().frame("iFrameResizer0");
         // driver.switchTo().defaultContent();
         return this;
     }
