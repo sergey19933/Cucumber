@@ -29,7 +29,6 @@
         <cucumber-junit.version>5.7.0</cucumber-junit.version>
         <allure-cucumber5-jvm.version>2.14.0</allure-cucumber5-jvm.version>
         <aspectj.version>1.9.7</aspectj.version>
-        <allure-junit5.version>2.13.6</allure-junit5.version>
 
 
     </properties>

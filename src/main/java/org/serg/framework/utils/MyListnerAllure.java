@@ -10,8 +10,8 @@ import org.serg.framework.managers.DriverManager;
 public class MyListnerAllure extends AllureCucumber5Jvm {
 
     public void setEventPublisher(EventPublisher publisher) {
-        EventHandler<TestStepFinished>eventHandler= testStepFinished -> {
-            if(testStepFinished.getResult().getStatus().equals(Status.FAILED)){
+        EventHandler<TestStepFinished> eventHandler = testStepFinished -> {
+            if (testStepFinished.getResult().getStatus().equals(Status.FAILED)) {
                 Allure.getLifecycle().addAttachment("Scrin", "image/png", "png"
                         , ((TakesScreenshot) DriverManager.getDriverManager().getDriver())
                                 .getScreenshotAs(OutputType.BYTES));

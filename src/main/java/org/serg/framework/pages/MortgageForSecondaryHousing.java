@@ -91,8 +91,8 @@ public class MortgageForSecondaryHousing extends BasePage {
 
 
     //   @Step("Отключаем страхование жизни")
-    public MortgageForSecondaryHousing clickCheckboxPage() {
-        clickCheckbox.click();
+    public MortgageForSecondaryHousing clickCheckboxPage(String nameBox,String offOn) {
+        choiceChekBox(nameBox,offOn);
         return this;
     }
 
@@ -121,38 +121,36 @@ public class MortgageForSecondaryHousing extends BasePage {
 
 
     // @Step("Проверка поля ежем плат")
-    public MortgageForSecondaryHousing checkFieldMonthlyPaymentPage(String value) {
-        actions.pause(1500).perform();
-        Assertions.assertEquals(checkFieldMonthlyPayment.getAttribute("innerText")
-                .replaceAll("\\D*", ""), value, "Не совпадает");
+    public MortgageForSecondaryHousing checkFieldPage(String nameField,String value) {
+        checkField(nameField,value);
         return this;
     }
 
-    //   @Step("Проверка поля суммы кредита")
-    public MortgageForSecondaryHousing checkFieldCreditSumPage(String value) {
-        actions.pause(1000).perform();
-        Assertions.assertEquals(checkFieldCreditSum.getAttribute("innerText")
-                .replaceAll("\\D*", ""), value, "Не совпадает");
-        return this;
-    }
+//    //   @Step("Проверка поля суммы кредита")
+//    public MortgageForSecondaryHousing checkFieldCreditSumPage(String value) {
+//        actions.pause(1000).perform();
+//        Assertions.assertEquals(checkFieldCreditSum.getAttribute("innerText")
+//                .replaceAll("\\D*", ""), value, "Не совпадает");
+//        return this;
+//    }
+//
+//    //  @Step("Проверка поля суммы необходимый доход")
+//    public MortgageForSecondaryHousing checkFieldRequiredIncomePage(String value) {
+//        Assertions.assertEquals(checkFieldRequiredIncome.getAttribute("innerText")
+//                .replaceAll("\\D*", ""), value, "Не совпадает");
+//        return this;
+//    }
 
-    //  @Step("Проверка поля суммы необходимый доход")
-    public MortgageForSecondaryHousing checkFieldRequiredIncomePage(String value) {
-        Assertions.assertEquals(checkFieldRequiredIncome.getAttribute("innerText")
-                .replaceAll("\\D*", ""), value, "Не совпадает");
-        return this;
-    }
 
-
-    /**
-     * Проверка ошибки ставки
-     */
-    // @Step("Проверяем что присутствует общая ошибка с текстом '{errMessage}'")
-    public MortgageForSecondaryHousing checkErrorMessageAlert(String errorMessage) {
-        Assertions.assertEquals(errorMessageS.getAttribute("innerText"), errorMessage, "Проверка ошибки процентной ставки " +
-                " было не пройдено");
-        return this;
-    }
+//    /**
+//     * Проверка ошибки ставки
+//     */
+//    // @Step("Проверяем что присутствует общая ошибка с текстом '{errMessage}'")
+//    public MortgageForSecondaryHousing checkErrorMessageAlert(String errorMessage) {
+//        Assertions.assertEquals(errorMessageS.getAttribute("innerText"), errorMessage, "Проверка ошибки процентной ставки " +
+//                " было не пройдено");
+//        return this;
+//    }
 
 
 //------------------------------------
@@ -180,5 +178,30 @@ public class MortgageForSecondaryHousing extends BasePage {
                 .replaceAll("\\D*", ""), value, "Поле введено не верно");
     }
 
+    /**
+     *
+     * @param nameBox название чекбокса
+     */
+    public void choiceChekBox(String nameBox,String offOn) {
+        String xPath = "//span[text()='" + nameBox + "']//../..//input[@class='switch-input-3-1-2']";
+        WebElement webElement = DriverManager.getDriverManager().getDriver().findElement(By.xpath(xPath));
+        if(webElement.getAttribute("ariaChecked").equalsIgnoreCase("true")
+                || offOn.equalsIgnoreCase("Выключить")){
+        webElement.click();
+        }
+    }
+
+    //span[contains(text(),'Ежемесячный платеж')]//..//span[@data-e2e-id='mland-calculator/medium-result-monthly-payment']
+
+    public void checkField(String nameField, String value) {
+        String xPath = "//span[contains(text(),'" + nameField + "')]//..//span[contains(@data-e2e-id,'mland-calculator')]";
+        WebElement webElement = DriverManager.getDriverManager().getDriver().findElement(By.xpath(xPath));
+
+        actions.pause(1500).perform();
+        Assertions.assertEquals(webElement.getAttribute("innerText")
+                .replaceAll("[^0-9,]", ""), value, "Не совпадает");
+    }
+
 
 }
+//span[contains(text(),'Процентная ставка')]//..//span[contains(@data-e2e-id,'mland-calculator/medium')]
