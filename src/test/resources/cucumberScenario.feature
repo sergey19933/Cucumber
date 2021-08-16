@@ -1,9 +1,9 @@
 #language: ru
 
-@all
+@regress
 Функционал: Сбербанк
 
-  @regress
+
   @firstTest
   Сценарий:  Проверка
     * Закрытия сообщения cookies

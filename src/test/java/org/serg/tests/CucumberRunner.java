@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
         plugin = {"org.serg.framework.utils.MyListnerAllure"},
         glue = {"org.serg.framework.steps"},
         features = {"src/test/resources/"},
-        tags = "@firstTest"
+        tags = "@regress"
 )
 
 public class CucumberRunner {
