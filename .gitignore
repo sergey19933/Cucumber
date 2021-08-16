@@ -1,6 +1,6 @@
 target
-.allure
 .idea
+.allure
 
 *.iml
 *.war

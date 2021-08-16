@@ -1,6 +1,7 @@
 package org.serg.framework.managers;
 
 import org.serg.framework.pages.*;
+import org.serg.framework.utils.MethodsUtils;
 
 public class PageManager {
 
@@ -18,6 +19,13 @@ public class PageManager {
      * Страничка с ипотекой на готовые квартиры
      */
     private MortgageForSecondaryHousing mortgageForSecondaryHousing;
+
+
+    /**
+     * Страничка с утилитарными методами
+     */
+    private MethodsUtils methodsUtils;
+
 
 
     /**
@@ -63,6 +71,19 @@ public class PageManager {
         }
         return mortgageForSecondaryHousing;
     }
+
+    /**
+     * Ленивая инициализация {@link MethodsUtils}
+     *
+     * @return methodsUtils
+     */
+    public MethodsUtils getMethodsUtilsPage() {
+        if (methodsUtils == null) {
+            methodsUtils = new MethodsUtils();
+        }
+        return methodsUtils;
+    }
+
 
 
 }

@@ -34,17 +34,6 @@ public class MortgageForSecondaryHousing extends BasePage {
     @FindBy(xpath = "//h2[contains(text(),'Рассчитайте ипотеку')]")
     private WebElement scrollResult;
 
-    @FindBy(xpath = "//span[@data-e2e-id='mland-calculator/medium-result-monthly-payment']")
-    private WebElement checkFieldMonthlyPayment;
-
-    @FindBy(xpath = "//span[@data-e2e-id='mland-calculator/mobile-result-credit-sum']")
-    private WebElement checkFieldCreditSum;
-
-    @FindBy(xpath = "//span[@data-e2e-id='mland-calculator/result-required-income']")
-    private WebElement checkFieldRequiredIncome;
-
-    @FindBy(xpath = "//span[@data-e2e-id='mland-calculator/medium-result-credit-rate']")
-    private WebElement errorMessageS;
 
     //  @Step("Проверяем что открылась страница 'Ипотека'")
     public MortgageForSecondaryHousing checkMortgageForSecondaryHousingPage() {
@@ -77,7 +66,7 @@ public class MortgageForSecondaryHousing extends BasePage {
      */
     // @Step("Заполняем поле '{nameField}' значением '{value}'")
     public MortgageForSecondaryHousing fillFieldPage(String nameField, String value) {
-        fillInputField(nameField, value);
+        pageManager.getMethodsUtilsPage().fillInputField(nameField, value);
         return this;
     }
 
@@ -92,7 +81,7 @@ public class MortgageForSecondaryHousing extends BasePage {
 
     //   @Step("Отключаем страхование жизни")
     public MortgageForSecondaryHousing clickCheckboxPage(String nameBox,String offOn) {
-        choiceChekBox(nameBox,offOn);
+        pageManager.getMethodsUtilsPage().choiceChekBox(nameBox,offOn);
         return this;
     }
 
@@ -122,86 +111,11 @@ public class MortgageForSecondaryHousing extends BasePage {
 
     // @Step("Проверка поля ежем плат")
     public MortgageForSecondaryHousing checkFieldPage(String nameField,String value) {
-        checkField(nameField,value);
+        pageManager.getMethodsUtilsPage().checkField(nameField,value);
         return this;
     }
 
-//    //   @Step("Проверка поля суммы кредита")
-//    public MortgageForSecondaryHousing checkFieldCreditSumPage(String value) {
-//        actions.pause(1000).perform();
-//        Assertions.assertEquals(checkFieldCreditSum.getAttribute("innerText")
-//                .replaceAll("\\D*", ""), value, "Не совпадает");
-//        return this;
-//    }
-//
-//    //  @Step("Проверка поля суммы необходимый доход")
-//    public MortgageForSecondaryHousing checkFieldRequiredIncomePage(String value) {
-//        Assertions.assertEquals(checkFieldRequiredIncome.getAttribute("innerText")
-//                .replaceAll("\\D*", ""), value, "Не совпадает");
-//        return this;
-//    }
 
-
-//    /**
-//     * Проверка ошибки ставки
-//     */
-//    // @Step("Проверяем что присутствует общая ошибка с текстом '{errMessage}'")
-//    public MortgageForSecondaryHousing checkErrorMessageAlert(String errorMessage) {
-//        Assertions.assertEquals(errorMessageS.getAttribute("innerText"), errorMessage, "Проверка ошибки процентной ставки " +
-//                " было не пройдено");
-//        return this;
-//    }
-
-
-//------------------------------------
-
-
-    /**
-     * @param nameField название поля
-     * @param value     заполняемое значение
-     */
-    public void fillInputField(String nameField, String value) {
-        String xPath = "//div[@class='dc-input__label-4-9-1'][contains(text(),'" + nameField + "')]/following-sibling::*";
-        WebElement webElement = DriverManager.getDriverManager().getDriver().findElement(By.xpath(xPath));
-        waitUtilElementToBeVisible(webElement);
-        waitUtilElementToBeClickable(webElement);
-        actions.click(webElement)
-                .keyDown(Keys.CONTROL)
-                .sendKeys("a")
-                .keyUp(Keys.CONTROL)
-                .sendKeys(value)
-                .pause(1000)
-                .build()
-                .perform();
-
-        Assertions.assertEquals(webElement.getAttribute("defaultValue")
-                .replaceAll("\\D*", ""), value, "Поле введено не верно");
-    }
-
-    /**
-     *
-     * @param nameBox название чекбокса
-     */
-    public void choiceChekBox(String nameBox,String offOn) {
-        String xPath = "//span[text()='" + nameBox + "']//../..//input[@class='switch-input-3-1-2']";
-        WebElement webElement = DriverManager.getDriverManager().getDriver().findElement(By.xpath(xPath));
-        if(webElement.getAttribute("ariaChecked").equalsIgnoreCase("true")
-                || offOn.equalsIgnoreCase("Выключить")){
-        webElement.click();
-        }
-    }
-
-    //span[contains(text(),'Ежемесячный платеж')]//..//span[@data-e2e-id='mland-calculator/medium-result-monthly-payment']
-
-    public void checkField(String nameField, String value) {
-        String xPath = "//span[contains(text(),'" + nameField + "')]//..//span[contains(@data-e2e-id,'mland-calculator')]";
-        WebElement webElement = DriverManager.getDriverManager().getDriver().findElement(By.xpath(xPath));
-
-        actions.pause(1500).perform();
-        Assertions.assertEquals(webElement.getAttribute("innerText")
-                .replaceAll("[^0-9,]", ""), value, "Не совпадает");
-    }
 
 
 }
-//span[contains(text(),'Процентная ставка')]//..//span[contains(@data-e2e-id,'mland-calculator/medium')]
