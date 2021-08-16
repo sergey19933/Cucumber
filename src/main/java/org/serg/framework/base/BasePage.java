@@ -1,7 +1,5 @@
 package org.serg.framework.base;
 
-import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,9 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.serg.framework.managers.DriverManager;
 import org.serg.framework.managers.PageManager;
-import org.serg.framework.managers.TestPropManager;
-
-import java.util.concurrent.TimeUnit;
 
 public class BasePage {
 
@@ -23,7 +18,7 @@ public class BasePage {
      *
      * @see DriverManager#getDriverManager()
      */
-    protected final DriverManager driverManager = DriverManager.getDriverManager();
+    protected DriverManager driverManager = DriverManager.getDriverManager();
 
     /**
      * Менеджер страничек
@@ -38,7 +33,7 @@ public class BasePage {
      *
      * @see Actions
      */
-    protected Actions actions = new Actions(DriverManager.getDriver());
+    protected Actions actions = new Actions(driverManager.getDriver());
 
 
     /**
@@ -46,7 +41,7 @@ public class BasePage {
      *
      * @see JavascriptExecutor
      */
-    protected JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+    protected JavascriptExecutor js = (JavascriptExecutor) driverManager.getDriver();
 
 
     /**
@@ -55,15 +50,7 @@ public class BasePage {
      *
      * @see WebDriverWait
      */
-    protected WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 10, 1000);
-
-
-    /**
-     * Менеджер properties
-     *
-     * @see TestPropManager#getTestPropManager()
-     */
-    private final TestPropManager props = TestPropManager.getTestPropManager();
+    protected WebDriverWait wait = new WebDriverWait(driverManager.getDriver(), 10, 1000);
 
 
 
@@ -76,7 +63,7 @@ public class BasePage {
      * @see PageFactory#initElements(WebDriver, Object)
      */
     public BasePage() {
-        PageFactory.initElements(DriverManager.getDriver(), this);
+        PageFactory.initElements(driverManager.getDriver(), this);
     }
 
 

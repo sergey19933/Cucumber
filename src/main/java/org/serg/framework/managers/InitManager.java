@@ -1,40 +1,47 @@
 package org.serg.framework.managers;
 
+import org.serg.framework.utils.TestPropertis;
+
 import java.util.concurrent.TimeUnit;
 
-import static org.serg.framework.managers.DriverManager.getDriver;
-import static org.serg.framework.managers.DriverManager.quitDriver;
-import static org.serg.framework.managers.PageManager.disableManagerPages;
-import static org.serg.framework.utils.PropConst.*;
+
 
 public class InitManager {
 
-
     /**
-     * Менеджер пропертей
-     * @see TestPropManager#getTestPropManager()
+     * Менеджер properties
+     *
+     * @see TestPropertis#getTestPropertis()
      */
-    public static TestPropManager props = TestPropManager.getTestPropManager();
+    private static final TestPropertis props = TestPropertis.getTestPropertis();
 
     /**
-     * Инициализация фреймворка и запуск браузера со страницей приложения
-     * @see DriverManager#getDriver()
-     * @see TestPropManager#getProperty(String)
-     * @see org.serg.framework.utils
+     * Менеджер WebDriver
+     *
+     * @see DriverManager#getDriverManager()
+     */
+    private static final DriverManager driverManager = DriverManager.getDriverManager();
+
+    /**
+     * Инициализация framework и запуск браузера со страницей приложения
+     *
+     * @see DriverManager
+     * @see TestPropertis#getProperty(String)
+     * @see io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm
      */
     public static void initFramework() {
-        getDriver().manage().window().maximize();
-        getDriver().manage().timeouts().implicitlyWait(Integer.parseInt(props.getProperty(IMPLICITLY_WAIT)), TimeUnit.SECONDS);
-        getDriver().manage().timeouts().pageLoadTimeout(Integer.parseInt(props.getProperty(PAGE_LOAD_TIMEOUT)), TimeUnit.SECONDS);
-        getDriver().get(props.getProperty(APP_URL));
+        driverManager.getDriver().manage().window().maximize();
+        driverManager.getDriver().manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driverManager.getDriver().manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+        driverManager.getDriver().get("https://www.sberbank.ru/ru/person");
     }
 
     /**
-     * Завершения работы фреймворка - гасит драйвер и закрывает сессию с браузером
+     * Завершения работы framework - гасит драйвер и закрывает сессию с браузером
+     *
      * @see DriverManager#quitDriver()
      */
     public static void quitFramework() {
-        quitDriver();
-        disableManagerPages();
+        driverManager.quitDriver();
     }
 }

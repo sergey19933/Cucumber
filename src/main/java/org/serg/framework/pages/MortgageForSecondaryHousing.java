@@ -49,8 +49,8 @@ public class MortgageForSecondaryHousing extends BasePage {
 
 
     public MortgageForSecondaryHousing framePage() {
-        DriverManager.getDriver().manage().timeouts().implicitlyWait(1500, TimeUnit.MILLISECONDS);
-        DriverManager.getDriver().switchTo().frame("iFrameResizer0");
+        DriverManager.getDriverManager().getDriver().manage().timeouts().implicitlyWait(1500, TimeUnit.MILLISECONDS);
+        DriverManager.getDriverManager().getDriver().switchTo().frame("iFrameResizer0");
         // driver.switchTo().defaultContent();
         return this;
     }

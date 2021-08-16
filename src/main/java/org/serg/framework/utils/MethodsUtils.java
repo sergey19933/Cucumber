@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.serg.framework.base.BasePage;
 import org.serg.framework.managers.DriverManager;
 
-import static org.serg.framework.managers.DriverManager.getDriver;
+import static org.serg.framework.managers.DriverManager.getDriverManager;
 
 public class MethodsUtils extends BasePage {
 
@@ -18,7 +18,7 @@ public class MethodsUtils extends BasePage {
     public void choiceChekBox(String nameBox,String offOn) {
         String xPath = "//span[text()='" + nameBox + "']//../..//input[@class='switch-input-3-1-2']";
         DriverManager.getDriverManager();
-        WebElement webElement = getDriver().findElement(By.xpath(xPath));
+        WebElement webElement = getDriverManager().getDriver().findElement(By.xpath(xPath));
         if(webElement.getAttribute("ariaChecked").equalsIgnoreCase("true")
                 || offOn.equalsIgnoreCase("Выключить")){
             webElement.click();
@@ -33,7 +33,7 @@ public class MethodsUtils extends BasePage {
      */
     public void checkField(String nameField, String value) {
         String xPath = "//span[contains(text(),'" + nameField + "')]//..//span[contains(@data-e2e-id,'mland-calculator')]";
-        WebElement webElement = getDriver().findElement(By.xpath(xPath));
+        WebElement webElement = getDriverManager().getDriver().findElement(By.xpath(xPath));
 
         actions.pause(1500).perform();
         Assertions.assertEquals(webElement.getAttribute("innerText")
@@ -47,7 +47,7 @@ public class MethodsUtils extends BasePage {
      */
     public void fillInputField(String nameField, String value) {
         String xPath = "//div[@class='dc-input__label-4-9-1'][contains(text(),'" + nameField + "')]/following-sibling::*";
-        WebElement webElement = getDriver().findElement(By.xpath(xPath));
+        WebElement webElement = getDriverManager().getDriver().findElement(By.xpath(xPath));
         waitUtilElementToBeVisible(webElement);
         waitUtilElementToBeClickable(webElement);
         actions.click(webElement)
