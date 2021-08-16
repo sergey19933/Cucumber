@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = {"org.serg.framework.utils.MyListnerAllure"},
+        plugin = {"io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"},
         glue = {"org.serg.framework.steps"},
         features = {"src/test/resources/"},
         tags = "@regress"
