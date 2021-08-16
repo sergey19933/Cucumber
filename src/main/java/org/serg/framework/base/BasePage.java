@@ -1,5 +1,7 @@
 package org.serg.framework.base;
 
+import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +12,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.serg.framework.managers.DriverManager;
 import org.serg.framework.managers.PageManager;
+import org.serg.framework.managers.TestPropManager;
+
+import java.util.concurrent.TimeUnit;
 
 public class BasePage {
 
@@ -18,7 +23,7 @@ public class BasePage {
      *
      * @see DriverManager#getDriverManager()
      */
-    protected DriverManager driverManager = DriverManager.getDriverManager();
+    protected final DriverManager driverManager = DriverManager.getDriverManager();
 
     /**
      * Менеджер страничек
@@ -51,6 +56,14 @@ public class BasePage {
      * @see WebDriverWait
      */
     protected WebDriverWait wait = new WebDriverWait(driverManager.getDriver(), 10, 1000);
+
+
+    /**
+     * Менеджер properties
+     *
+     * @see TestPropManager#getTestPropManager()
+     */
+    private final TestPropManager props = TestPropManager.getTestPropManager();
 
 
 

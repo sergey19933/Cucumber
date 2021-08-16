@@ -1,19 +1,18 @@
 package org.serg.framework.managers;
 
-import org.serg.framework.utils.TestPropertis;
-
 import java.util.concurrent.TimeUnit;
 
 
+import static org.serg.framework.utils.PropConst.*;
 
 public class InitManager {
 
     /**
      * Менеджер properties
      *
-     * @see TestPropertis#getTestPropertis()
+     * @see TestPropManager#getTestPropManager()
      */
-    private static final TestPropertis props = TestPropertis.getTestPropertis();
+    private static final TestPropManager props = TestPropManager.getTestPropManager();
 
     /**
      * Менеджер WebDriver
@@ -26,14 +25,14 @@ public class InitManager {
      * Инициализация framework и запуск браузера со страницей приложения
      *
      * @see DriverManager
-     * @see TestPropertis#getProperty(String)
-     * @see io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm
+     * @see TestPropManager#getProperty(String)
+     * @see org.serg.framework.utils
      */
     public static void initFramework() {
         driverManager.getDriver().manage().window().maximize();
-        driverManager.getDriver().manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        driverManager.getDriver().manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-        driverManager.getDriver().get("https://www.sberbank.ru/ru/person");
+        driverManager.getDriver().manage().timeouts().implicitlyWait(Integer.parseInt(props.getProperty(IMPLICITLY_WAIT)), TimeUnit.SECONDS);
+        driverManager.getDriver().manage().timeouts().pageLoadTimeout(Integer.parseInt(props.getProperty(PAGE_LOAD_TIMEOUT)), TimeUnit.SECONDS);
+        driverManager.getDriver().get(TestPropManager.getTestPropManager().getProperty(BASE_URL));
     }
 
     /**

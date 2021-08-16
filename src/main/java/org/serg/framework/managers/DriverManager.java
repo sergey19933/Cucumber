@@ -1,15 +1,16 @@
 package org.serg.framework.managers;
 
+import org.apache.commons.exec.OS;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.serg.framework.utils.TestPropertis;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.concurrent.TimeUnit;
+import static org.serg.framework.utils.PropConst.*;
 
 
-/**
- * Класс для управления веб драйвером
- */
+/** Класс для управления веб драйвером
+        */
 public class DriverManager {
 
     /**
@@ -29,9 +30,9 @@ public class DriverManager {
     /**
      * Менеджер properties
      *
-     * @see TestPropertis#getTestPropertis()
+     * @see TestPropManager#getTestPropManager()
      */
-    private final TestPropertis testPropertis = TestPropertis.getTestPropertis();
+    private final TestPropManager props = TestPropManager.getTestPropManager();
 
 
     /**
@@ -61,14 +62,11 @@ public class DriverManager {
      */
     public WebDriver getDriver() {
         if (driver == null) {
-            System.setProperty("webdriver.chrome.driver",testPropertis.getProperty("webdriver.chrome.driver"));
-            driver = new ChromeDriver();
-            driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-            driver.manage().window().maximize();
+            initDriver();
         }
         return driver;
     }
+
 
     /**
      * Метод для закрытия сессии драйвера и браузера
@@ -82,6 +80,63 @@ public class DriverManager {
         }
     }
 
+
+    /**
+     * Метод инициализирующий веб драйвер
+     */
+    private void initDriver() {
+        if (OS.isFamilyWindows()) {
+            initDriverWindowsOsFamily();
+        } else if (OS.isFamilyMac()) {
+            initDriverMacOsFamily();
+        } else if (OS.isFamilyUnix()) {
+            initDriverUnixOsFamily();
+        }
+    }
+
+    /**
+     * Метод инициализирующий веб драйвер под ОС семейства Windows
+     */
+    private void initDriverWindowsOsFamily() {
+        initDriverAnyOsFamily(PATH_GECKO_DRIVER_WINDOWS, PATH_CHROME_DRIVER_WINDOWS);
+    }
+
+
+    /**
+     * Метод инициализирующий веб драйвер под ОС семейства Mac
+     */
+    private void initDriverMacOsFamily() {
+        initDriverAnyOsFamily(PATH_GECKO_DRIVER_MAC, PATH_CHROME_DRIVER_MAC);
+    }
+
+    /**
+     * Метод инициализирующий веб драйвер под ОС семейства Unix
+     */
+    private void initDriverUnixOsFamily() {
+        initDriverAnyOsFamily(PATH_GECKO_DRIVER_UNIX, PATH_CHROME_DRIVER_UNIX);
+    }
+
+
+    /**
+     * Метод инициализирующий веб драйвер под любую ОС
+     *
+     * @param gecko - переменная firefox из файла application.properties в классе {@link org.serg.framework.utils.PropConst}
+     * @param chrome - переменная chrome из файла application.properties в классе {@link org.serg.framework.utils.PropConst}
+     */
+    private void initDriverAnyOsFamily(String gecko, String chrome) {
+        switch (props.getProperty(TYPE_BROWSER)) {
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver", props.getProperty(gecko));
+                driver = new FirefoxDriver();
+                break;
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", props.getProperty(chrome));
+                driver = new ChromeDriver();
+                break;
+            default:
+                Assertions.fail("Типа браузера '" + props.getProperty(TYPE_BROWSER) + "' не существует во фреймворке");
+        }
+    }
 
 
 }

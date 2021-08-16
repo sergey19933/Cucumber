@@ -84,12 +84,7 @@ public class PageManager {
         return methodsUtils;
     }
 
-    /**
-     * Сброс менеджера страничек
-     */
-    public static void disableManagerPages() {
-        pageManager = null;
-    }
+
 
 }
 
